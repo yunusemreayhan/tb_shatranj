@@ -29,24 +29,24 @@ sub Process {
   if ($generate && !-e $tb.".rtbz") {
     print "Generating $tb\n";
     if ($tb !~ /.*P.*/) {
-      system "rtbgen $dopt-t $threads --stats $tb";
+      system "./rtbgen $dopt-t $threads --stats $tb";
     } else {
-      system "rtbgenp $dopt-t $threads --stats $tb";
+      system "./rtbgenp $dopt-t $threads --stats $tb";
     }
   }
   if ($verify) {
     printf "Verifying $tb\n";
     if ($tb !~ /.*P.*/) {
-      system "rtbver -t $threads --log $tb";
+      system "./rtbver -t $threads --log $tb";
     } else {
-      system "rtbverp -t $threads --log $tb";
+      system "./rtbverp -t $threads --log $tb";
     }
   }
   if ($huffman && -e $tb.".rtbw") {
     if ($tb !~ /.*P.*/) {
-      system "rtbver -h $tb";
+      system "./rtbver -h $tb";
     } else {
-      system "rtbverp -h $tb";
+      system "./rtbverp -h $tb";
     }
   }
 }

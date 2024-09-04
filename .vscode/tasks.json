@@ -22,7 +22,7 @@
         {
             "label": "regenerate",
             "type": "shell",
-            "command": "perl ./run.pl --generate --min 2 --max 5 --disk",
+            "command": "perl run.pl --generate --min 3 --max 5 --disk --log --threads=3",
             "options": {
                 "cwd": "${workspaceFolder}/src"
             },
@@ -36,7 +36,7 @@
         {
             "label": "generate",
             "type": "shell",
-            "command": "perl ./run.pl --generate --min 2 --max 5 --disk",
+            "command": "perl run.pl --generate --min 3 --max 5 --disk --log",
             "options": {
                 "cwd": "${workspaceFolder}/src"
             },
