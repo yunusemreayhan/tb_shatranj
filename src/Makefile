@@ -16,7 +16,7 @@ FLAGS += -DTBPIECES=7
 
 # Use libzstd instead of LZ4 for compression of temporary files.
 FLAGS += -DUSE_ZSTD
-LDFLAGS += -lzstd
+LDFLAGS += -lzstd -L/usr/local/lib
 
 # Specify number of threads used for compression of temporary files.
 FLAGS += -DCOMPRESSION_THREADS=6
@@ -30,8 +30,8 @@ CC = gcc -pthread
 
 # Compilation flags
 # For Haswell add -mbmi2 and select -DBMI2 above.
-#CFLAGS = -g -march=native -pipe -D_GNU_SOURCE -Wall -std=c11 -Wno-array-bounds
-CFLAGS = -O3 -march=native -pipe -D_GNU_SOURCE -Wall -std=c11 -Wno-array-bounds -flto
+CFLAGS = -g -march=native -pipe -D_GNU_SOURCE -Wall -std=c11 -Wno-array-bounds
+# CFLAGS = -O3 -march=native -pipe -D_GNU_SOURCE -Wall -std=c11 -Wno-array-bounds -flto
 #CFLAGS = -O3 -march=native -pipe -D_GNU_SOURCE -Wall -std=c11 -fsanitize=undefined -Wno-array-bounds
 
 export FLAGS CC CFLAGS LDFLAGS

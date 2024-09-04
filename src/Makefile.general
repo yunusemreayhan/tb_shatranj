@@ -50,5 +50,5 @@ $(VERTBPNAME): $(VERTBPOBJS)
 	$(CC) $(CFLAGS) -o $(VERTBPNAME) $(VERTBPOBJS:%=$(OBJDIR)/%) $(LDFLAGS)
 
 tbcheck: $(TBCHECKOBJS)
-	$(CC) $(CFLAGS) -o tbcheck $(TBCHECKOBJS:%=$(OBJDIR)/%)
+	$(CC) $(CFLAGS) -o tbcheck $(TBCHECKOBJS:%=$(OBJDIR)/%) $(LDFLAGS)
 
