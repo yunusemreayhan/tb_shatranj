@@ -4,6 +4,14 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "remove tables",
+            "type": "shell",
+            "command": "rm -f *.rtbw *.rtbz *.txt",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            }
+        },
+        {
             "label": "build",
             "type": "shell",
             "command": "bear -- make all",
@@ -17,17 +25,21 @@
             "command": "bear -- make clean all",
             "options": {
                 "cwd": "${workspaceFolder}/src"
-            }
+            },
+            "dependsOn": [
+                "remove tables"
+            ]
         },
         {
             "label": "regenerate",
             "type": "shell",
-            "command": "perl run.pl --generate --min 3 --max 4 --disk --log --threads=3",
+            "command": "",
             "options": {
                 "cwd": "${workspaceFolder}/src"
             },
             "dependsOn": [
-                "rebuild"
+                "rebuild",
+                "generate common"
             ],
             "problemMatcher": [
                 "$gcc"
@@ -36,7 +48,22 @@
         {
             "label": "generate",
             "type": "shell",
-            "command": "perl run.pl --generate --min 3 --max 4 --disk --log",
+            "command": "",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            },
+            "dependsOn": [
+                "build",
+                "generate common"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "generate common",
+            "type": "shell",
+            "command": "perl run.pl --generate --min 3 --max 4 --disk --threads=16",
             "options": {
                 "cwd": "${workspaceFolder}/src"
             },
