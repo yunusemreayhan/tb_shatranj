@@ -47,11 +47,11 @@ extern uint16_t attack_table[107648];
 extern struct BMI2Info bishop_bmi2[64];
 extern struct BMI2Info rook_bmi2[64];
 
-static __inline__ bitboard BishopRange(int sq, bitboard occ)
+/* static __inline__ bitboard BishopRange(int sq, bitboard occ)
 {
   struct BMI2Info *info = &bishop_bmi2[sq];
   return _pdep_u64(info->data[_pext_u64(occ, info->mask1)], info->mask2);
-}
+} */
 
 static __inline__ bitboard RookRange(int sq, bitboard occ)
 {
@@ -59,7 +59,7 @@ static __inline__ bitboard RookRange(int sq, bitboard occ)
   return _pdep_u64(info->data[_pext_u64(occ, info->mask1)], info->mask2);
 }
 
-#define QueenRange(sq,occ) (BishopRange(sq,occ)|RookRange(sq,occ))
+// #define QueenRange(sq,occ) (BishopRange(sq,occ)|RookRange(sq,occ))
 
 #endif
 

@@ -17,7 +17,10 @@
             "command": "bear -- make all",
             "options": {
                 "cwd": "${workspaceFolder}/src"
-            }
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "rebuild",

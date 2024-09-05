@@ -29,7 +29,7 @@ extern ubyte hyper_rank[512];
 
 #ifdef HYPER_INLINE
 
-#ifdef HYPER_SSE3
+/* #ifdef HYPER_SSE3
 #include <tmmintrin.h>
 
 // from http://chessprogramming.wikispaces.com/SSSE3#SSSE3Version
@@ -37,7 +37,7 @@ extern ubyte hyper_rank[512];
 __m128i hyper_diagmask_xmm[64];
 __m128i hyper_bitmask_xmm[64];
 __m128i hyper_swapmask_xmm;
- 
+
 static __inline__ bitboard BishopRange(int sq, bitboard occ) {
   __m128i o, r, m, b, s;
 
@@ -82,7 +82,7 @@ static __inline__ bitboard BishopRange(int sq, bitboard occ)
 
   return diag135 | diag45;
 }
-#endif
+#endif */
 
 #ifndef HYPER_SSE3
 static __inline__ bitboard RookRange(int sq, bitboard occ)
@@ -123,11 +123,11 @@ static __inline__ bitboard RookRange(int sq, bitboard occ)
 #endif
 
 #else
-bitboard BishopRange(int sq, bitboard occ) __attribute__ ((pure));
+// bitboard BishopRange(int sq, bitboard occ) __attribute__ ((pure));
 bitboard RookRange(int sq, bitboard occ) __attribute__ ((pure));
 #endif
 
-#define QueenRange(sq,occ) (BishopRange(sq,occ)|RookRange(sq,occ))
+// #define QueenRange(sq,occ) (BishopRange(sq,occ)|RookRange(sq,occ))
 
 #endif
 

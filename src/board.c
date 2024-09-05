@@ -12,7 +12,7 @@
 #define MAX_PIECES 8
 
 bitboard bit[64];
-bitboard knight_range[64], king_range[64];
+bitboard bishop_range[64], queen_range[64], knight_range[64], king_range[64];
 #ifdef HAS_PAWNS
 bitboard pawn_range[2][64];
 bitboard sides_mask[64];
@@ -28,11 +28,16 @@ void set_up_tables(void)
   int x, y;
 
   bitboard bits;
-
+  // clang-format off
   static int Nx[] = {1, 2, 2, 1, -1, -2, -2, -1},
 	     Ny[] = {2, 1, -1, -2, -2, -1, 1, 2},
 	     Kx[] = {-1, 0, 1, 1, 1, 0, -1, -1},
-	     Ky[] = {1, 1, 1, 0, -1, -1, -1, 0};
+	     Ky[] = {1, 1, 1, 0, -1, -1, -1, 0},
+       Bx[] = {2, 2, -2, -2},
+       By[] = {2, -2, -2, 2},
+       Qx[] = {1, 1, -1, -1},
+       Qy[] = {1, -1, -1, 1};
+  // clang-format on
 
   for (sq = 0; sq < 64; sq++)
     bit[sq] = 1ULL << sq;
@@ -69,8 +74,20 @@ void set_up_tables(void)
     knight_range[sq] = bits;
 
     bits = 0;
-    for (i = 0; i < 8; i++) 
-      if (x + Kx[i] >= 0 && x + Kx[i] < 8 && y + Ky[i] >= 0 && y + Ky[i] < 8) 
+    for (i = 0; i < 4; i++)
+      if (x + Bx[i] >= 0 && x + Bx[i] < 8 && y + By[i] >= 0 && y + By[i] < 8)
+	bits |= bit[x + Bx[i] + 8 * (y + By[i])];
+    bishop_range[sq] = bits;
+
+    bits = 0;
+    for (i = 0; i < 4; i++)
+      if (x + Qx[i] >= 0 && x + Qx[i] < 8 && y + Qy[i] >= 0 && y + Qy[i] < 8)
+	bits |= bit[x + Qx[i] + 8 * (y + Qy[i])];
+    queen_range[sq] = bits;
+
+    bits = 0;
+    for (i = 0; i < 8; i++)
+      if (x + Kx[i] >= 0 && x + Kx[i] < 8 && y + Ky[i] >= 0 && y + Ky[i] < 8)
 	bits |= bit[x + Kx[i] + 8 * (y + Ky[i])];
     king_range[sq] = bits;
 

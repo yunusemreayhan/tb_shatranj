@@ -34,7 +34,7 @@ static __inline__ int PopCount(bitboard x)
 #include "hyper.h"
 #include "bmi2.h"
 
-extern bitboard knight_range[64], king_range[64];
+extern bitboard knight_range[64], king_range[64], queen_range[64], bishop_range[64];
 #ifdef HAS_PAWNS
 extern bitboard pawn_range[2][64];
 #define white_pawn_range pawn_range[0]
@@ -48,6 +48,8 @@ extern bitboard atom_mask[64];
 #endif
 
 #define KnightRange(x) knight_range[x]
+#define QueenRange(x) queen_range[x]
+#define BishopRange(x) bishop_range[x]
 #define KingRange(x) king_range[x]
 
 #define PAWN 1
@@ -81,11 +83,11 @@ static __inline__ bitboard PieceRange(int sq, int type, bitboard occ)
   case KNIGHT:
     return KnightRange(sq);
   case BISHOP:
-    return BishopRange(sq, occ);
+    return BishopRange(sq);
   case ROOK:
     return RookRange(sq, occ);
   case QUEEN:
-    return QueenRange(sq, occ);
+    return QueenRange(sq);
   default:
     return KingRange(sq);
   }
@@ -105,11 +107,11 @@ static __inline__ bitboard PieceRange1(int sq, int type, bitboard occ)
   case KNIGHT:
     return KnightRange(sq);
   case BISHOP:
-    return BishopRange(sq, occ);
+    return BishopRange(sq);
   case ROOK:
     return RookRange(sq, occ);
   case QUEEN:
-    return QueenRange(sq, occ);
+    return QueenRange(sq);
   default:
     assume(0);
   }
@@ -127,11 +129,11 @@ static __inline__ bitboard PieceRange2(int sq, int type, bitboard occ)
   case KNIGHT:
     return KnightRange(sq);
   case BISHOP:
-    return BishopRange(sq, occ);
+    return BishopRange(sq);
   case ROOK:
     return RookRange(sq, occ);
   case QUEEN:
-    return QueenRange(sq, occ);
+    return QueenRange(sq);
   default:
     assume(0);
   }

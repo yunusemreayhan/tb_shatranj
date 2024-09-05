@@ -23,7 +23,7 @@ __m128i hyper_swapmask_xmm;
 #endif
 
 #ifndef HYPER_INLINE
-#ifdef HYPER_SSE3
+/* #ifdef HYPER_SSE3
 bitboard BishopRange(int sq, bitboard occ) {
   __m128i o, r, m, b, s;
 
@@ -68,7 +68,7 @@ bitboard BishopRange(int sq, bitboard occ)
 
   return diag135 | diag45;
 }
-#endif
+#endif */
 
 #ifndef HYPER_SSE3
 bitboard RookAttacks(int sq, bitboard occ)
@@ -146,7 +146,7 @@ static void set_up_move_gen(void)
     hyper_table[sq].diagmask45 = bb2;
     hyper_table[sq].bitmask = bit[sq];
 #endif
-    
+
     bb = 0;
     for (d = 1; !((sq88 + 16 * d) & 0x88); d++)
       bb |= bit[sq + 8 * d];

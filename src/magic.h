@@ -20,11 +20,11 @@ struct Magic {
 extern struct Magic bishop_magic[64];
 extern struct Magic rook_magic[64];
 
-static __inline__ bitboard BishopRange(int sq, bitboard occ)
+/* static __inline__ bitboard BishopRange(int sq, bitboard occ)
 {
   struct Magic *mag = &bishop_magic[sq];
   return mag->data[((occ & mag->mask) * mag->magic) >> (64-9)];
-}
+} */
 
 static __inline__ bitboard RookRange(int sq, bitboard occ)
 {
@@ -32,7 +32,7 @@ static __inline__ bitboard RookRange(int sq, bitboard occ)
   return mag->data[((occ & mag->mask) * mag->magic) >> (64-12)];
 }
 
-#define QueenRange(sq,occ) (BishopRange(sq,occ)|RookRange(sq,occ))
+// #define QueenRange(sq,occ) (BishopRange(sq,occ)|RookRange(sq,occ))
 
 #endif
 

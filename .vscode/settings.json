@@ -1,3 +1,13 @@
 {
-    "workbench.colorTheme": "Red"
+    "workbench.colorTheme": "Red",
+    "files.associations": {
+        "sstream": "cpp",
+        "charconv": "cpp"
+    },
+    "vim.handleKeys": {
+        "<C-d>": true,
+        "<C-s>": false,
+        "<C-z>": false,
+        "<C-p>": false
+    }
 }
