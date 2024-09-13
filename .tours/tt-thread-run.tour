@@ -1,0 +1,67 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "tt thread run",
+  "steps": [
+    {
+      "file": "src/tbgen.c",
+      "description": "# where total_work is defined",
+      "line": 727
+    },
+    {
+      "file": "src/defs.h",
+      "description": " # SMALL definition\n\n defuault small definition for regular builds",
+      "line": 13
+    },
+    {
+      "file": "src/tbgen.c",
+      "description": "# where size is calculated\n\nthis is default for regular builds",
+      "line": 741
+    },
+    {
+      "file": "src/tbgen.c",
+      "description": "# where work_g is created\n\nmask is give 0xfa to be used reversed, no idea why he parameterized it",
+      "line": 750
+    },
+    {
+      "file": "src/threads.c",
+      "description": "# uint64_t *create_work(int n, uint64_t size, uint64_t mask); definition of create work\n",
+      "line": 119
+    },
+    {
+      "file": "src/threads.c",
+      "description": "# void fill_work(int n, uint64_t size, uint64_t mask, uint64_t *w);\n\nn = total_work (100 + numofthreads * 10);\n\nsize = total board state (i guess)",
+      "line": 95
+    },
+    {
+      "file": "src/threads.c",
+      "description": "# actual filling logic\n\nin here with mask 0x3F we keep empty last 6 bit of the work, so that we could iterate last pieces positions",
+      "line": 103
+    },
+    {
+      "file": "src/tbgen.c",
+      "description": "# run_threaded(calc_mates, work_g, 1); where run_threaded is called with callback\n",
+      "line": 871
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# static void calc_mates(struct thread_data *thread; this is the callback function calc_mates for example",
+      "line": 199
+    },
+    {
+      "file": "src/threads.c",
+      "description": "# void run_threaded(void (*func)(struct thread_data *), uint64_t *work, int report_time) this is the run_threaded",
+      "line": 239
+    },
+    {
+      "file": "src/threads.c",
+      "description": "# THREAD_FUNC worker(void *arg) this is inside of run_threaded worker function call",
+      "line": 197
+    },
+    {
+      "file": "src/threads.c",
+      "description": "# queue.func(thread); this is the place where worker function runs from queue one by one",
+      "line": 223
+    }
+  ],
+  "ref": "02993f69cb6bc3bf74153f40c670c1780bbc5cf5"
+}

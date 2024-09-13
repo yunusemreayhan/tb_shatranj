@@ -1,0 +1,76 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "checking mate",
+  "steps": [
+    {
+      "file": "src/tbgen.c",
+      "description": "# initial calc_mates call\n",
+      "line": 871
+    },
+    {
+      "file": "src/rtbverp.c",
+      "description": "# loop for calculating mates",
+      "line": 932
+    },
+    {
+      "file": "src/tbgen.c",
+      "description": "# where inside, illegal also calculated",
+      "line": 861
+    },
+    {
+      "file": "src/rtbver.c",
+      "description": "# illegal marking place 2",
+      "line": 661
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# illegal marking 2",
+      "line": 374
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# BEGIN_CAPTS_PIVOT_NOPROBE",
+      "line": 398
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# LOOP_CAPTS_PIVOT1",
+      "line": 407
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# FILL_OCC_CAPTS_PIVOT1",
+      "line": 419
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# MAKE_IDX2_PIVOT1\n\n~mask[0] in here means get 0th index of and it with index idx and zero the square of ith piece index",
+      "line": 429
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# LOOP_WHITE_PIECES_PIVOT1",
+      "line": 432
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# mark illegal 3\n\nmarks all possible moves as illegal",
+      "line": 232
+    },
+    {
+      "file": "src/generic.c",
+      "description": "# what is mark begin",
+      "line": 223
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# loop for calculating mates\n",
+      "line": 209
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# check_mate; if all possible moves are not illegal",
+      "line": 136
+    }
+  ]
+}

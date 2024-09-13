@@ -2,12 +2,30 @@
     "workbench.colorTheme": "Red",
     "files.associations": {
         "sstream": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "cstdint": "c",
+        "array": "c",
+        "chrono": "c",
+        "deque": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "string_view": "c",
+        "format": "c",
+        "initializer_list": "c",
+        "span": "c",
+        "unistd.h": "c",
+        "atomic": "c",
+        "compare": "c",
+        "random": "c",
+        "*.tcc": "c"
     },
     "vim.handleKeys": {
         "<C-d>": true,
         "<C-s>": false,
         "<C-z>": false,
-        "<C-p>": false
+        "<C-p>": false,
+        "<C-f>": false,
+        "<C-S-p>": false
     }
 }
