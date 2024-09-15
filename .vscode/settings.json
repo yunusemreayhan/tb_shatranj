@@ -21,6 +21,8 @@
         "*.tcc": "c"
     },
     "vim.handleKeys": {
+        "<C-k>": true,
+        "<C-v>": true,
         "<C-d>": true,
         "<C-s>": false,
         "<C-z>": false,

@@ -19,7 +19,7 @@ FLAGS += -DUSE_ZSTD
 LDFLAGS += -lzstd -L/usr/local/lib
 
 # Specify number of threads used for compression of temporary files.
-FLAGS += -DCOMPRESSION_THREADS=6
+FLAGS += -DCOMPRESSION_THREADS=6 --save-temps
 
 # Specify the compiler
 # regular linux
