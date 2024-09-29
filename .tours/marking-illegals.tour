@@ -1,0 +1,223 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "marking illegals",
+  "steps": [
+    {
+      "file": "src/tbgen.c",
+      "description": "# decision of generic include\n\nwe have small defined in default so \"generics.c\" is in use",
+      "line": 89
+    },
+    {
+      "file": "src/tbgen.c",
+      "description": "# work_piv1 creation place\n\nshift[0] has value of ((material count) - 1) * 6\n\nshift[1] has value of ((material count) - 2) * 6, used for king king calculations, for example during illegal marking",
+      "line": 755
+    },
+    {
+      "file": "src/tbgen.c",
+      "description": "# init tables\n\nwhere also mirror and KK_map is initialized",
+      "line": 848
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# mirror initialization",
+      "line": 147
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# mirror filling logic,\n\n* if after mirroring sq1 into lower left half of the board\n    * if sq1 is above a1h8 diagonal we mirror sq1 to below the diagonal, and same goes to sq2\n    * if sq1 on diagonal, we check also sq2\n        * if sq2 over diagonal we mirror sq2 only\n        * if sq2 is on diagonal also we do nothing\n\nso mirror value below zero in case of\n* sq1 is above\n* sq1 is on diagonal\n    * but sq2 is over diagonal\n\n\nnon zero and above zero in rest\n* sq1 is below\n    * sq2 is below,\n    * sq2 is on,\n    * sq2 is above\n* sq1 is on\n    * sq2 is on\n    * sq2 is below",
+      "line": 144
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# KK_map initialization",
+      "line": 155
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# initializing KK_inv\n\ninv_tri in here from square to tri index.",
+      "line": 161
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# sq_mask init\n\nif square is in right half xor first 3 bits of mask 0\n\nif square is also in upper half xor last 3 bits of mask 0\n\n* upper right 0x3f\n* upper left  0x07\n* lower right 0x38\n* lower left  0x00",
+      "line": 175
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# mask_a1a8 for masking last 3 bits of all pieces other than kings\n\nsimilarly mask_a1h8 or mask_a1h1 is first 3 bits of all pieces other than kings",
+      "line": 168
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# diaoganl init, shift [1] was 6*(material_count-2)\n\n441 and onwards we have placements of kings where they locate in a1h8 diaogonal I guess\nsize was initialized similarly\n  size = 462ULL << (6 * (numpcs-2) - 1);\n",
+      "line": 180
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# 441 diaogonals start place, values bigger than 441 also above dioganal I guess",
+      "line": 61
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# setting up tables for movegeneration",
+      "line": 182
+    },
+    {
+      "file": "src/tbgen.c",
+      "description": "# calc broken call, work_g",
+      "line": 859
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# calc broken, detecting square collision\n\n```cpp\nstatic void calc_broken(struct thread_data *thread)\n{\n    uint64_t idx, idx2;\n    int i;\n    int n = numpcs;\n    do\n    {\n        if (!(n >= 3 && n <= 7))\n            __builtin_unreachable();\n    } while (0);\n    bitboard occ, bb;\n    uint64_t end = thread->end;\n\n    for (idx = thread->begin; idx < end; idx += 64)\n    {\n        occ = 0;\n        for (i = n - 2, idx2 = idx >> 6; i > 1; i--, idx2 >>= 6)\n        {\n            uint64_t dummy = idx2 & 0x3f;\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        {\n            uint64_t dummy = KK_inv[idx2][0];\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        {\n            uint64_t dummy = KK_inv[idx2][1];\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        if (PopCount(occ) == n - 1)\n        {\n            for (i = 0, bb = 1; i < 64; i++, bb <<= 1)\n            {\n                if (occ & bb)\n                    table_w[idx + i] = table_b[idx + i] = 0xff;\n                else\n                    table_w[idx + i] = table_b[idx + i] = 0xfe;\n            }\n        }\n        else\n        {\n            for (i = 0; i < 64; i++)\n                table_w[idx + i] = table_b[idx + i] = 0xff;\n        }\n    }\n}\n```",
+      "line": 175
+    },
+    {
+      "file": "src/tbgen.c",
+      "description": "# calc captures",
+      "line": 861
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# calc illegal, inside calc capture wrapper function work_piv1",
+      "line": 472
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# calc illegal func itself",
+      "line": 367
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# begin capts pivot no probe",
+      "line": 369
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# BEGIN_CAPTS_PIVOT_NOPROBE",
+      "line": 395
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# LOOP_CAPTS_PIVOT1 use\n\n```cpp\nstatic void calc_illegal_w(struct thread_data *thread)\n{\n    uint64_t idx;\n    bitboard occ;\n    int j, k;\n    int p[8];\n    int n = numpcs;\n    do\n    {\n        if (!(n >= 3 && n <= 7))\n            __builtin_unreachable();\n    } while (0);\n    uint64_t end = thread->end;\n\n    for (idx = thread->begin; idx < end; idx++)\n    // work_piv0 = create_work(total_work, 1ULL << shift[0], 0);\n    // shift[0] -> ((material count) - 1) * 6,\n    //\n    // work_piv1 = create_work(total_work, 10ULL << shift[1], 0);\n    // shift[1] -> ((material count) - 2) * 6,\n    {\n        uint64_t idx2 = idx;\n        occ = 0;\n        for (k = n - 1; k > 1; k--, idx2 >>= 6)\n        {\n            uint64_t dummy = p[k] = idx2 & 0x3f;\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        {\n            uint64_t dummy = p[0] = inv_tri0x40[idx2];\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        if (PopCount(occ) == n - 1)\n        {\n            idx2 = idx & ~mask[0];\n            // ~mask[0] = 000000 111111 111111 111111 111111\n            do\n            {\n                for (j = 1; white_pcs[j] >= 0; j++)\n                {\n                    k = white_pcs[j];\n                    if (KK_map[p[0]][p[k]] < 0 || mirror[p[0]][p[k]] < 0)\n                        continue;\n                    uint64_t idx3 = idx2 | ((uint64_t)KK_map[p[0]][p[k]] << shift[1]);\n                    mark_illegal(k, table_w, idx3 & ~mask[k], occ, p);\n                }\n            } while (0);\n        }\n    }\n}\n```",
+      "line": 371,
+      "selection": {
+        "start": {
+          "line": 20,
+          "character": 47
+        },
+        "end": {
+          "line": 23,
+          "character": 47
+        }
+      }
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# LOOP_CAPTS_PIVOT1",
+      "line": 404
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# FILL_OCC_CAPTS_PIVOT1 use\n\n\n```cpp\nstatic void calc_illegal_w(struct thread_data *thread)\n{\n    uint64_t idx;\n    bitboard occ;\n    int j, k;\n    int p[8];\n    int n = numpcs;\n    do\n    {\n        if (!(n >= 3 && n <= 7))\n            __builtin_unreachable();\n    } while (0);\n    uint64_t end = thread->end;\n\n    for (idx = thread->begin; idx < end; idx++)\n    // work_piv0 = create_work(total_work, 1ULL << shift[0], 0);\n    // shift[0] -> ((material count) - 1) * 6,\n    //\n    // work_piv1 = create_work(total_work, 10ULL << shift[1], 0);\n    // shift[1] -> ((material count) - 2) * 6,\n    {\n        uint64_t idx2 = idx;\n        occ = 0;\n        for (k = n - 1; k > 1; k--, idx2 >>= 6)\n        {\n            uint64_t dummy = p[k] = idx2 & 0x3f;\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        {\n            uint64_t dummy = p[0] = inv_tri0x40[idx2];\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        if (PopCount(occ) == n - 1)\n        {\n            idx2 = idx & ~mask[0];\n            // ~mask[0] = 000000 111111 111111 111111 111111\n            do\n            {\n                for (j = 1; white_pcs[j] >= 0; j++)\n                {\n                    k = white_pcs[j];\n                    if (KK_map[p[0]][p[k]] < 0 || mirror[p[0]][p[k]] < 0)\n                        continue;\n                    uint64_t idx3 = idx2 | ((uint64_t)KK_map[p[0]][p[k]] << shift[1]);\n                    mark_illegal(k, table_w, idx3 & ~mask[k], occ, p);\n                }\n            } while (0);\n        }\n    }\n}\n```",
+      "line": 372,
+      "selection": {
+        "start": {
+          "line": 21,
+          "character": 45
+        },
+        "end": {
+          "line": 24,
+          "character": 47
+        }
+      }
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# FILL_OCC_CAPTS_PIVOT1",
+      "line": 416
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# MAKE_IDX2_PIVOT1 use\n\n\n```cpp\nstatic void calc_illegal_w(struct thread_data *thread)\n{\n    uint64_t idx;\n    bitboard occ;\n    int j, k;\n    int p[8];\n    int n = numpcs;\n    do\n    {\n        if (!(n >= 3 && n <= 7))\n            __builtin_unreachable();\n    } while (0);\n    uint64_t end = thread->end;\n\n    for (idx = thread->begin; idx < end; idx++)\n    // work_piv0 = create_work(total_work, 1ULL << shift[0], 0);\n    // shift[0] -> ((material count) - 1) * 6,\n    //\n    // work_piv1 = create_work(total_work, 10ULL << shift[1], 0);\n    // shift[1] -> ((material count) - 2) * 6,\n    {\n        uint64_t idx2 = idx;\n        occ = 0;\n        for (k = n - 1; k > 1; k--, idx2 >>= 6)\n        {\n            uint64_t dummy = p[k] = idx2 & 0x3f;\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        {\n            uint64_t dummy = p[0] = inv_tri0x40[idx2];\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        if (PopCount(occ) == n - 1)\n        {\n            idx2 = idx & ~mask[0];\n            // ~mask[0] = 000000 111111 111111 111111 111111\n            do\n            {\n                for (j = 1; white_pcs[j] >= 0; j++)\n                {\n                    k = white_pcs[j];\n                    if (KK_map[p[0]][p[k]] < 0 || mirror[p[0]][p[k]] < 0)\n                        continue;\n                    uint64_t idx3 = idx2 | ((uint64_t)KK_map[p[0]][p[k]] << shift[1]);\n                    mark_illegal(k, table_w, idx3 & ~mask[k], occ, p);\n                }\n            } while (0);\n        }\n    }\n}\n```",
+      "line": 373,
+      "selection": {
+        "start": {
+          "line": 39,
+          "character": 35
+        },
+        "end": {
+          "line": 40,
+          "character": 61
+        }
+      }
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# MAKE_IDX2_PIVOT1",
+      "line": 426
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# LOOP_WHITE_PIECES_PIVOT1 use\n\n\n```cpp\nstatic void calc_illegal_w(struct thread_data *thread)\n{\n    uint64_t idx;\n    bitboard occ;\n    int j, k;\n    int p[8];\n    int n = numpcs;\n    do\n    {\n        if (!(n >= 3 && n <= 7))\n            __builtin_unreachable();\n    } while (0);\n    uint64_t end = thread->end;\n\n    for (idx = thread->begin; idx < end; idx++)\n    // work_piv0 = create_work(total_work, 1ULL << shift[0], 0);\n    // shift[0] -> ((material count) - 1) * 6,\n    //\n    // work_piv1 = create_work(total_work, 10ULL << shift[1], 0);\n    // shift[1] -> ((material count) - 2) * 6,\n    {\n        uint64_t idx2 = idx;\n        occ = 0;\n        for (k = n - 1; k > 1; k--, idx2 >>= 6)\n        {\n            uint64_t dummy = p[k] = idx2 & 0x3f;\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        {\n            uint64_t dummy = p[0] = inv_tri0x40[idx2];\n            __asm__(\"bts %1,%0\" : \"+r\"(occ) : \"r\"(dummy));\n        };\n        if (PopCount(occ) == n - 1)\n        {\n            idx2 = idx & ~mask[0];\n            // ~mask[0] = 000000 111111 111111 111111 111111\n            do\n            {\n                for (j = 1; white_pcs[j] >= 0; j++)\n                {\n                    k = white_pcs[j];\n                    if (KK_map[p[0]][p[k]] < 0 || mirror[p[0]][p[k]] < 0)\n                        continue;\n                    uint64_t idx3 = idx2 | ((uint64_t)KK_map[p[0]][p[k]] << shift[1]);\n                    mark_illegal(k, table_w, idx3 & ~mask[k], occ, p);\n                }\n            } while (0);\n        }\n    }\n}\n```",
+      "line": 374
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# LOOP_WHITE_PIECES_PIVOT1",
+      "line": 429
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# inv_tri0x40",
+      "line": 109
+    },
+    {
+      "file": "src/tbverp.c",
+      "description": "# mask definition\n\n\n```c\n  for (i = 0; i < numpcs; i++) {\n    shift[i] = (numpcs - i - 1) * 6;\n    mask[i] = 0x3fULL << shift[i];\n  }\n  // lets say we have 5 pieces on board,\n  // for first piece shift[0] = (5-0-1) * 6 = 4*6 = 24 \n  // mask[0]  = 111111 000000 000000 000000 000000\n  // ~mask[0] = 000000 111111 111111 111111 111111\n  //\n  // for first piece shift[1] = (5-1-1) * 6 = 3*6 = 18 \n  // mask[1]  = 000000 111111 000000 000000 000000\n  // ~mask[1] = 111111 000000 111111 111111 111111\n```",
+      "line": 380
+    },
+    {
+      "file": "src/rtbgen.c",
+      "description": "# mark illegal definition\n\n```cpp\nstatic void mark_illegal(int k, uint8_t *restrict table, uint64_t idx, bitboard occ, int *restrict p)\n{\n    int sq;\n    uint64_t idx2;\n    bitboard bb;\n    bb = PieceMoves3(p[k], pt[k], occ);\n    while (bb)\n    {\n        sq = FirstOne(bb);\n        idx2 = MakeMove2(idx, k, sq);\n        table[idx2] = 0;\n        ((bb) &= (bb)-1);\n    };\n}\n```",
+      "line": 229
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# MARK",
+      "line": 301
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# MARK_BEGIN",
+      "line": 333
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# MARK_END",
+      "line": 342
+    },
+    {
+      "file": "src/board.h",
+      "description": "# piece moves 2",
+      "line": 142
+    },
+    {
+      "file": "src/board.h",
+      "description": "# FirstOne",
+      "line": 15
+    },
+    {
+      "file": "src/generics.c",
+      "description": "# MakeMove2 for move a normal piece",
+      "line": 205
+    },
+    {
+      "file": "src/board.h",
+      "description": "# ClearFirst",
+      "line": 31
+    }
+  ],
+  "ref": "4699e423a5a5c26e87a3291d69da2517f8b62fd3",
+  "description": "asdasdasd"
+}
